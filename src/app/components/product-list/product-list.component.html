@@ -1,0 +1,6 @@
+<ul class="list-group">
+  <li *ngFor="let product of products" class="list-group-item">
+    {{ product.name }}{{ product.author }}:
+    {{ product.unitPrice | currency : "INR" }}
+  </li>
+</ul>

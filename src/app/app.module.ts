@@ -7,12 +7,16 @@ import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ProductService } from './services/product.service';
+import { MainComponent } from './components/main/main.component';
+import { ShortenPipe } from './common/shorten.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    HeaderComponent
+    HeaderComponent,
+    MainComponent,
+    ShortenPipe
   ],
   imports: [
     BrowserModule,

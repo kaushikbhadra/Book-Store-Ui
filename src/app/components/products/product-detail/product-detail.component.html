@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="col-md-12">
+    <div class="row" style="margin-top: 120px">
+      <div class="col-md-6">
+        <img
+          class="img-thumbnail"
+          [src]="product.imageUrl"
+          [alt]="product.name"
+        />
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ product.author }}</h6>
+            <p class="card-text">
+              {{ product.description }}
+            </p>
+            <p class="card-subtitle">
+              Unit In Stocks:
+              <span class="badge badge-info mb-3">{{
+                product.unitInStock
+              }}</span>
+            </p>
+            <div class="d-flex justify-content-between">
+              <p class="text-info">
+                {{ product.unitPrice | currency : "INR" }}
+              </p>
+              <a href="#" class="btn btn-outline-primary">Add Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-outline-primary" (click)="onBackNavigate()">Back</button>
+    </div>
+  </div>
+</div>

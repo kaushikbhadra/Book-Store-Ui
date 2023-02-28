@@ -10,19 +10,24 @@
       />
       MyShop
     </a>
-    <div class="justify-content-between">
-      <form class="form-inline my-2 my-lg-0">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
-          Search
-        </button>
-      </form>
+
+    <div class="form-inline my-2 my-lg-0">
+      <input
+        class="form-control mr-sm-2"
+        type="search"
+        #Input
+        placeholder="Search"
+        aria-label="Search"
+        (keyup.enter)="onSubmit(Input.value)"
+      />
+      <button
+        class="btn btn-outline-primary my-2 my-sm-0"
+        (click)="onSubmit(Input.value)"
+      >
+        Search
+      </button>
     </div>
+
     <button type="button" class="btn">
       <img
         src="/assets/images/nav/local_grocery_store.svg"

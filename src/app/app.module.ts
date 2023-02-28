@@ -11,6 +11,8 @@ import { ShortenPipe } from './common/shorten.pipe';
 import { ProductsComponent } from './components/products/products.component';
 import { ProductsCategoryComponent } from './components/products/products-category/products-category.component';
 import { StartComponent } from './components/start/start.component';
+import { FormsModule } from '@angular/forms';
+import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +23,9 @@ import { StartComponent } from './components/start/start.component';
     ProductsComponent,
     ProductsCategoryComponent,
     StartComponent,
+    ProductDetailComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [ProductService],
   bootstrap: [AppComponent],
 })

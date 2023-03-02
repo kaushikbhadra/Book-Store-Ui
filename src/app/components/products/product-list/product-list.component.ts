@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import {
   GetResponseProducts,
   ProductService,
@@ -26,7 +28,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartService: CartService,
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -92,5 +95,18 @@ export class ProductListComponent implements OnInit {
     this.productService
       .getProductBySearch(this.keyword, this.pageNumber)
       .subscribe(this.paginationResult());
+  }
+
+  addToCart(cartProduct: Product) {
+    console.log(cartProduct.name);
+
+    const cartItem = new CartItem(
+      cartProduct.id,
+      cartProduct.name,
+      cartProduct.imageUrl,
+      cartProduct.unitPrice,
+      1
+    );
+    this.cartService.addToCart(cartItem);
   }
 }

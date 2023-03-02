@@ -29,7 +29,7 @@
     </div>
     <div class="d-flex align-items-center">
       <div class="border border-info rounded-circle">
-        <div class="p-2">67.90</div>
+        <div class="p-2">{{ totalPrice | currency : "INR" }}</div>
       </div>
       <button type="button" class="btn">
         <img
@@ -39,7 +39,7 @@
           class="d-inline-block"
           alt="cart"
         />
-        <span class="badge badge-info align-top">4</span>
+        <span class="badge badge-info align-top">{{ totalQuantity }}</span>
       </button>
     </div>
   </nav>

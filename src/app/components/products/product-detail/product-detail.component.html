@@ -26,12 +26,19 @@
               <p class="text-info">
                 {{ product.unitPrice | currency : "INR" }}
               </p>
-              <a href="#" class="btn btn-outline-primary">Add Cart</a>
+              <button
+                (click)="addToCart(product)"
+                class="btn btn-outline-primary btn-sm"
+              >
+                Add Cart
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <button class="btn btn-outline-primary" (click)="onBackNavigate()">Back</button>
+      <button class="btn btn-outline-primary" (click)="onBackNavigate()">
+        Back
+      </button>
     </div>
   </div>
 </div>

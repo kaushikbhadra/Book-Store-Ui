@@ -13,6 +13,7 @@ import { ProductsCategoryComponent } from './components/products/products-catego
 import { StartComponent } from './components/start/start.component';
 import { FormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
+import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ProductDetailComponent } from './components/products/product-detail/pro
     ProductsCategoryComponent,
     StartComponent,
     ProductDetailComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [ProductService],

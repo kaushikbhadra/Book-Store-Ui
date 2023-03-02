@@ -9,25 +9,39 @@ import { ProductCategory } from '../common/product-category';
 })
 export class ProductService {
   private baseUrl = 'http://localhost:8082/api';
+  private size: number = 20;
 
   constructor(private httpClient: HttpClient) {}
 
-  getProductList(id: number): Observable<Product[]> {
-    const searchUrl = `${this.baseUrl}/products/search/findByCategoryId?id=${id}&size=8`;
+  // getAllProducts(pageNumber: number) : Observable<GetResponseProducts>{
 
-    return this.getProducts(searchUrl);
+  //   const searchUrl = `${this.baseUrl}/products?page=${pageNumber}&size=${this.size}`;
+  //   return this.httpClient.get<GetResponseProducts>(searchUrl);
+
+  // }
+
+  getProductListViaPagination(
+    pageNumber: number,
+    id: number
+  ): Observable<GetResponseProducts> {
+    const searchUrl = `${this.baseUrl}/products/search/findByCategoryId?id=${id}&page=${pageNumber}&size=${this.size}`;
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
   getProductCategoryList(): Observable<ProductCategory[]> {
-    const searchUrl = `${this.baseUrl}/product-category?size=8`;
+    const searchUrl = `${this.baseUrl}/product-category`;
 
     return this.httpClient
       .get<GetResponseProductCategory>(searchUrl)
       .pipe(map((response) => response._embedded.productCategory));
   }
 
-  getProductBySearch(keyword: string): Observable<Product[]> {
-    const searchUrl = `${this.baseUrl}/products/search/findByNameContaining?name=${keyword}&size=8`;
+  getProductBySearch(
+    keyword: string,
+    pageNumber: number
+  ): Observable<GetResponseProducts> {
+    const searchUrl = `${this.baseUrl}/products/search/findByNameContaining?name=${keyword}&page=${pageNumber}&size=${this.size}`;
 
     return this.getProducts(searchUrl);
   }
@@ -39,15 +53,19 @@ export class ProductService {
   }
 
   private getProducts(search: string) {
-    return this.httpClient
-      .get<GetResponseProducts>(search)
-      .pipe(map((response) => response._embedded.products));
+    return this.httpClient.get<GetResponseProducts>(search);
   }
 }
 
-interface GetResponseProducts {
+export interface GetResponseProducts {
   _embedded: {
     products: Product[];
+  };
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
   };
 }
 

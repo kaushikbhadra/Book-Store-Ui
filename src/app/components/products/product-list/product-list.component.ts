@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs';
 import { Product } from 'src/app/common/product';
-import { ProductService } from 'src/app/services/product.service';
+import {
+  GetResponseProducts,
+  ProductService,
+} from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -9,11 +13,16 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-  products!: Product[];
+  products: Product[] = [];
   categoryId!: number;
+  prevCategoryId: number = 1;
   searchMode!: boolean;
   keyword!: string;
- 
+  isloading: boolean = false;
+
+  totalPageElements!: number;
+  totalPages!: number;
+  pageNumber: number = 0;
 
   constructor(
     private productService: ProductService,
@@ -21,13 +30,28 @@ export class ProductListComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
-      this.getProducts();
+      // this.getAllProducts(this.pageNumber);
+
+      this.getProducts(this.pageNumber);
     });
   }
 
-  private getProducts() {
+  // getAllProducts(pageIndex: number) {
+  //   this.pageNumber = pageIndex;
+  //   this.productService
+  //     .getAllProducts(this.pageNumber).pipe(map(data => {
+  //       console.log(data);
+  //       return data;
+
+  //     }))
+  //     .subscribe(this.paginationResult);
+  // }
+
+  getProducts(pageIndex: number) {
     const HasId: boolean = this.route.snapshot.paramMap.has('id');
     this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    this.pageNumber = pageIndex;
+
     if (this.searchMode) {
       this.getProductsViaSearch();
     } else {
@@ -37,15 +61,36 @@ export class ProductListComponent implements OnInit {
         this.categoryId = 1;
       }
 
-      this.productService.getProductList(this.categoryId).subscribe((data) => {
-        this.products = data;
-      });
+      if (this.prevCategoryId != this.categoryId) {
+        this.pageNumber = 0;
+      }
+
+      this.prevCategoryId = this.categoryId;
+
+      this.productService
+        .getProductListViaPagination(this.pageNumber, this.categoryId)
+        .subscribe(this.paginationResult());
     }
+  }
+
+  getproductPrevOrNext(direction?: string) {
+    this.getProducts(
+      direction === 'forword' ? this.pageNumber + 1 : this.pageNumber - 1
+    );
+  }
+
+  private paginationResult() {
+    return (data: GetResponseProducts) => {
+      this.products = data._embedded.products;
+      this.pageNumber = data.page.number;
+      this.totalPages = data.page.totalPages;
+      this.totalPageElements = data.page.totalElements;
+    };
   }
   private getProductsViaSearch() {
     this.keyword = String(this.route.snapshot.paramMap.get('keyword'));
-    this.productService.getProductBySearch(this.keyword).subscribe((data) => {
-      this.products = data;
-    });
+    this.productService
+      .getProductBySearch(this.keyword, this.pageNumber)
+      .subscribe(this.paginationResult());
   }
 }

@@ -14,6 +14,7 @@ import { StartComponent } from './components/start/start.component';
 import { FormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
 import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinner.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinne
     StartComponent,
     ProductDetailComponent,
     LoadingSpinnerComponent,
+    CartDetailsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [ProductService],

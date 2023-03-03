@@ -29,7 +29,7 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private cartService: CartService,
+    private cartService: CartService
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -98,8 +98,6 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(cartProduct: Product) {
-    console.log(cartProduct.name);
-
     const cartItem = new CartItem(
       cartProduct.id,
       cartProduct.name,

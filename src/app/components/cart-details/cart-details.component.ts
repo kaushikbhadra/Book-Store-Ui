@@ -1,30 +1,49 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  selector: 'app-cart-details',
+  templateUrl: './cart-details.component.html',
+  styleUrls: ['./cart-details.component.css'],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class CartDetailsComponent implements OnInit, OnDestroy {
+  cartItems: CartItem[] = [];
   totalPrice: number = 0.0;
   totalQuantity: number = 0;
   totalPriceUnsubscribe!: Subscription;
   totalQuantityUnsubscribe!: Subscription;
 
   constructor(
-    private router: Router,
+    private cartService: CartService,
     private route: ActivatedRoute,
-    private cartService: CartService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.updateCartStatus();
+    this.listOfCartDetails();
   }
-  updateCartStatus() {
+
+  onDecrement(cartItem: CartItem) {
+    this.cartService.decToCart(cartItem);
+  }
+
+  onIncrement(cartItem: CartItem) {
+    this.cartService.addToCart(cartItem);
+  }
+
+  onRemove(cartItem: CartItem) {
+    this.cartService.removeItem(cartItem);
+  }
+
+  onBack() {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  listOfCartDetails() {
+    this.cartItems = this.cartService.cartItems;
     this.totalPriceUnsubscribe = this.cartService.totalPrice.subscribe(
       (data) => {
         this.totalPrice = data;
@@ -36,14 +55,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.totalQuantity = data;
       }
     );
-  }
 
-  onSubmit(value: string) {
-    this.router.navigateByUrl(`/search/${value}`);
-  }
-
-  onCartDetails() {
-    this.router.navigate(['/cart-details'], { relativeTo: this.route });
+    this.cartService.totalCartItemsPrice();
   }
 
   ngOnDestroy(): void {

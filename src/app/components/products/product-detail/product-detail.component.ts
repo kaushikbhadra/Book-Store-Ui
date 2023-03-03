@@ -27,7 +27,6 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(cartProduct: Product) {
-    console.log(cartProduct.name);
 
     const cartItem = new CartItem(
       cartProduct.id,

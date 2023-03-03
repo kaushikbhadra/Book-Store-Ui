@@ -1,0 +1,86 @@
+<div class="container mt-5 p-3 rounded cart">
+  <div class="col-md-12">
+    <div *ngIf="cartItems.length !== 0" class="product-details mr-2">
+      <button
+        type="button"
+        class="btn d-flex align-items-center"
+        (click)="onBack()"
+      >
+        <img src="assets/images/cart/arrow_back.svg" alt="img" />
+        <span class="ml-2">Continue Shopping</span>
+      </button>
+      <hr />
+      <h6 class="mb-0">Shopping cart</h6>
+      <div class="d-flex justify-content-between">
+        <span></span>
+        <div class="d-flex flex-row align-items-center">
+          <span class="d-block h6">quantity</span>
+
+          <span class="d-block ml-5 h6">price</span>
+        </div>
+      </div>
+
+      <div
+        class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded"
+        *ngFor="let cartItem of cartItems; let i = index"
+      >
+        <div class="d-flex">
+          <img class="rounded" [src]="cartItem.imageUrl" width="50" />
+          <div class="ml-2">
+            <span class="font-weight-bold d-block">{{ cartItem.name }}</span>
+            <span class="badge badge-info">{{
+              cartItem.unitPrice | currency : "INR"
+            }}</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center">
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm font-weight-bold"
+              (click)="onDecrement(cartItem)"
+            >
+              -
+            </button>
+            <span class="d-block border p-1 ml-2 mr-2">{{
+              cartItem.quantity
+            }}</span>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm font-weight-bold"
+              (click)="onIncrement(cartItem)"
+            >
+              +
+            </button>
+          </div>
+          <span class="d-block ml-5 font-weight-bold"
+            >{{ cartItem.quantity * cartItem.unitPrice | currency : "INR" }}
+          </span>
+          <button (click)="onRemove(cartItem)" class="btn btn-sm">
+            <img
+              src="assets/images/cart/delete.svg"
+              alt="delete"
+              class="ml-3"
+            />
+          </button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-3 p-2">
+        <div class="ml-2">
+          <span class="font-weight-bold d-block">Total</span>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <span class="d-block">{{ totalQuantity }}</span
+          ><span class="d-block ml-5 font-weight-bold">{{
+            totalPrice | currency : "INR"
+          }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="cartItems.length === 0" class="alert alert-warning">
+      Shopping cart is Empty
+    </div>
+  </div>
+</div>

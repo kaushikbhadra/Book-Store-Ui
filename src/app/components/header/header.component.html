@@ -1,6 +1,6 @@
 <header class="sticky-top">
   <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand">
+    <a routerLink="/products" class="navbar-brand">
       <img
         src="/assets/images/nav/logo.png"
         width="30"
@@ -31,7 +31,7 @@
       <div class="border border-info rounded-circle">
         <div class="p-2">{{ totalPrice | currency : "INR" }}</div>
       </div>
-      <button type="button" class="btn">
+      <button type="button" class="btn btn-sm ml-1" (click)="onCartDetails()">
         <img
           src="/assets/images/nav/local_grocery_store.svg"
           width="30"

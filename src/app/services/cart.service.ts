@@ -21,7 +21,9 @@ export class CartService {
       //     break;
       //   }
       // }
-      existingCartItem = this.cartItems.find(tempItem => tempItem.id === newCartItem.id);
+      existingCartItem = this.cartItems.find(
+        (tempItem) => tempItem.id === newCartItem.id
+      );
     }
 
     if (existingCartItem != undefined) {
@@ -31,6 +33,25 @@ export class CartService {
     }
 
     this.totalCartItemsPrice();
+  }
+
+  decToCart(oldCartItem: CartItem) {
+    oldCartItem.quantity--;
+    if (oldCartItem.quantity === 0) {
+      this.removeItem(oldCartItem);
+    } else {
+      this.totalCartItemsPrice();
+    }
+  }
+
+  removeItem(item: CartItem) {
+    const index = this.cartItems.findIndex(
+      (tempItem) => tempItem.id === item.id
+    );
+    if (index > -1) {
+      this.cartItems.splice(index, 1);
+      this.totalCartItemsPrice();
+    }
   }
 
   totalCartItemsPrice() {

@@ -20,7 +20,6 @@ export class ProductListComponent implements OnInit {
   prevCategoryId: number = 1;
   searchMode!: boolean;
   keyword!: string;
-  isloading: boolean = false;
 
   totalPageElements!: number;
   totalPages!: number;

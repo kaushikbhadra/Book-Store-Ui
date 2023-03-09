@@ -11,10 +11,10 @@ import { ShortenPipe } from './common/shorten.pipe';
 import { ProductsComponent } from './components/products/products.component';
 import { ProductsCategoryComponent } from './components/products/products-category/products-category.component';
 import { StartComponent } from './components/start/start.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
-import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinner.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +26,16 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
     ProductsCategoryComponent,
     StartComponent,
     ProductDetailComponent,
-    LoadingSpinnerComponent,
     CartDetailsComponent,
+    CheckoutComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [ProductService],
   bootstrap: [AppComponent],
 })

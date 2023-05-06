@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { User } from '../common/user';
 
 export interface AuthResponse {
@@ -21,7 +22,7 @@ export class AuthService {
   user = new BehaviorSubject<User | null>(null);
   tokenExpirationTimer: any;
 
-  private BaseUrl = 'http://localhost:8082/api/auth';
+  private BaseUrl = environment.apiUrl + '/auth';
 
   constructor(private http: HttpClient, private router: Router) {}
 

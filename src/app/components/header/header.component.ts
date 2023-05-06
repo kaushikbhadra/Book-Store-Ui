@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   totalPriceUnsubscribe!: Subscription;
   totalQuantityUnsubscribe!: Subscription;
   isAuth = false;
+  username!:string| undefined;
   private userSub!: Subscription;
 
   constructor(
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.updateCartStatus();
     this.userSub = this.authService.user.subscribe((user) => {
       this.isAuth = !!user;
+      this.username = user?.name;
     });
   }
   updateCartStatus() {

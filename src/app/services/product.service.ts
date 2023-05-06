@@ -9,16 +9,9 @@ import { ProductCategory } from '../common/product-category';
 })
 export class ProductService {
   private baseUrl = 'http://localhost:8082/api';
-  private size: number = 20;
+  private size: number = 8;
 
   constructor(private httpClient: HttpClient) {}
-
-  // getAllProducts(pageNumber: number) : Observable<GetResponseProducts>{
-
-  //   const searchUrl = `${this.baseUrl}/products?page=${pageNumber}&size=${this.size}`;
-  //   return this.httpClient.get<GetResponseProducts>(searchUrl);
-
-  // }
 
   getProductListViaPagination(
     pageNumber: number,

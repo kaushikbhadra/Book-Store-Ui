@@ -27,10 +27,31 @@
       </button>
     </div>
     <div class="d-flex align-items-center">
-      <div class="border border-info rounded-circle">
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-primary ml-2"
+        (click)="onLogin()"
+        *ngIf="!isAuth"
+      >
+        Login
+      </button>
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-danger ml-2"
+        (click)="onLogout()"
+        *ngIf="isAuth"
+      >
+        Logout
+      </button>
+      <div class="border border-info rounded-circle" *ngIf="isAuth">
         <div class="p-2">{{ totalPrice | currency : "INR" }}</div>
       </div>
-      <button type="button" class="btn btn-sm ml-1" (click)="onCartDetails()">
+      <button
+        type="button"
+        class="btn btn-sm ml-1"
+        (click)="onCartDetails()"
+        *ngIf="isAuth"
+      >
         <img
           src="/assets/images/nav/local_grocery_store.svg"
           width="30"

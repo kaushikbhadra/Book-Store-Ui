@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CartItem } from 'src/app/common/cart-item';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -14,15 +14,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   totalQuantity: number = 0;
   totalPriceUnsubscribe!: Subscription;
   totalQuantityUnsubscribe!: Subscription;
+  isAuth = false;
+  private userSub!: Subscription;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private cartService: CartService
+    private cartService: CartService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.updateCartStatus();
+    this.userSub = this.authService.user.subscribe((user) => {
+      this.isAuth = !!user;
+    });
   }
   updateCartStatus() {
     this.totalPriceUnsubscribe = this.cartService.totalPrice.subscribe(
@@ -38,6 +44,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
 
+  onLogin() {
+    this.router.navigate(['/auth']);
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
+
   onSubmit(value: string) {
     this.router.navigateByUrl(`/search/${value}`);
   }
@@ -49,5 +63,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.totalPriceUnsubscribe.unsubscribe();
     this.totalQuantityUnsubscribe.unsubscribe();
+    this.userSub.unsubscribe();
   }
 }

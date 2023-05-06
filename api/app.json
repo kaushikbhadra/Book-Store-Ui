@@ -1,0 +1,17 @@
+[
+  {
+    "BaseUrl": "http://localhost:8082",
+    "products": "BaseUrl/api/products",
+    "product-category": "BaseUrl/api/product-category",
+    "products:id": "BaseUrl/api/products/{id}",
+    "product-category:id": "BaseUrl/product-category/{id}",
+    "countries": "BaseUrl/api/countries",
+    "states": "BaseUrl/api/states",
+    "search:countrieCode": "BaseUrl/api/states/search/findByCountryCode?code={countrieCode}",
+    "search:product": "BaseUrl/api/products/search/findByNameContaining?name={product}",
+    "add-page::add-size::all-api": "BaseUrl/api/products/search/findByNameContaining?name={product}&&page={pageNumber}&size={view-size-single-page}",
+    "checkout": "BaseUrl/api/checkout/purchase",
+    "auth:register": "BaseUrl/api/auth/register",
+    "auth:login":"BaseUrl/api/auth/login"
+  }
+]

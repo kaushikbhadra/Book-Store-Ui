@@ -1,5 +1,9 @@
 <div class="container my-3">
-  <div class="row mb-3">
+  <div *ngIf="isLoading" class="mb-3" style="text-align: center">
+    <app-loading></app-loading>
+  </div>
+  <!-- For Product List -->
+  <div class="row mb-3" *ngIf="!isLoading">
     <div class="col-md-3 my-6" *ngFor="let product of products">
       <div class="card">
         <a routerLink="/products/{{ product.id }}" class="card-link">
@@ -33,10 +37,12 @@
       </div>
     </div>
   </div>
-  <div *ngIf="products?.length == 0">
+  <!-- Show Error Message -->
+  <div *ngIf="products?.length == 0 && !isLoading">
     <p class="alert alert-warning">No Products Found</p>
   </div>
 
+  <!-- Show Pagination -->
   <div *ngIf="products?.length != 0">
     <ul class="pagination justify-content-end">
       <li class="page-item" [ngClass]="pageNumber == 0 ? 'disabled' : ''">

@@ -24,6 +24,7 @@ export class ProductListComponent implements OnInit {
   totalPageElements!: number;
   totalPages!: number;
   pageNumber: number = 0;
+  isLoading = false;
 
   constructor(
     private productService: ProductService,
@@ -32,24 +33,12 @@ export class ProductListComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
-      // this.getAllProducts(this.pageNumber);
-
       this.getProducts(this.pageNumber);
     });
   }
 
-  // getAllProducts(pageIndex: number) {
-  //   this.pageNumber = pageIndex;
-  //   this.productService
-  //     .getAllProducts(this.pageNumber).pipe(map(data => {
-  //       console.log(data);
-  //       return data;
-
-  //     }))
-  //     .subscribe(this.paginationResult);
-  // }
-
   getProducts(pageIndex: number) {
+    this.isLoading = true;
     const HasId: boolean = this.route.snapshot.paramMap.has('id');
     this.searchMode = this.route.snapshot.paramMap.has('keyword');
     this.pageNumber = pageIndex;
@@ -71,7 +60,16 @@ export class ProductListComponent implements OnInit {
 
       this.productService
         .getProductListViaPagination(this.pageNumber, this.categoryId)
-        .subscribe(this.paginationResult());
+        .subscribe({
+          next: (data) => {
+            this.isLoading = false;
+            this.paginationResult();
+          },
+          error: (error) => {
+            this.isLoading = false;
+            console.log(error.message);
+          },
+        });
     }
   }
 
@@ -93,7 +91,16 @@ export class ProductListComponent implements OnInit {
     this.keyword = String(this.route.snapshot.paramMap.get('keyword'));
     this.productService
       .getProductBySearch(this.keyword, this.pageNumber)
-      .subscribe(this.paginationResult());
+      .subscribe({
+        next: (data) => {
+          this.isLoading = false;
+          this.paginationResult();
+        },
+        error: (error) => {
+          this.isLoading = false;
+          console.log(error.message);
+        },
+      });
   }
 
   addToCart(cartProduct: Product) {

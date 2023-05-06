@@ -112,6 +112,7 @@ export class CheckoutComponent implements OnInit {
         number: new FormControl('', [
           Validators.required,
           Validators.minLength(16),
+          Validators.maxLength(16),
           SpaceValidators.notOnlyWhiteSpace,
         ]),
         exp: this.formBuilder.group({

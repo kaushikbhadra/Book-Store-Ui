@@ -3,7 +3,7 @@
     <app-loading></app-loading>
   </div>
   <!-- For Product List -->
-  <div class="row mb-3" *ngIf="!isLoading">
+  <div class="row mb-3">
     <div class="col-md-3 my-6" *ngFor="let product of products">
       <div class="card">
         <a routerLink="/products/{{ product.id }}" class="card-link">
@@ -38,7 +38,7 @@
     </div>
   </div>
   <!-- Show Error Message -->
-  <div *ngIf="products?.length == 0 && !isLoading">
+  <div *ngIf="error">
     <p class="alert alert-warning">No Products Found</p>
   </div>
 

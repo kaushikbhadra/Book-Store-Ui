@@ -25,6 +25,7 @@ export class ProductListComponent implements OnInit {
   totalPages!: number;
   pageNumber: number = 0;
   isLoading = false;
+  error!: null;
 
   constructor(
     private productService: ProductService,
@@ -61,13 +62,17 @@ export class ProductListComponent implements OnInit {
       this.productService
         .getProductListViaPagination(this.pageNumber, this.categoryId)
         .subscribe({
-          next: (data) => {
+          next: (data: GetResponseProducts) => {
             this.isLoading = false;
-            this.paginationResult();
+            this.products = data._embedded.products;
+            this.pageNumber = data.page.number;
+            this.totalPages = data.page.totalPages;
+            this.totalPageElements = data.page.totalElements;
           },
           error: (error) => {
             this.isLoading = false;
             console.log(error.message);
+            this.error = error;
           },
         });
     }
@@ -79,26 +84,22 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  private paginationResult() {
-    return (data: GetResponseProducts) => {
-      this.products = data._embedded.products;
-      this.pageNumber = data.page.number;
-      this.totalPages = data.page.totalPages;
-      this.totalPageElements = data.page.totalElements;
-    };
-  }
   private getProductsViaSearch() {
     this.keyword = String(this.route.snapshot.paramMap.get('keyword'));
     this.productService
       .getProductBySearch(this.keyword, this.pageNumber)
       .subscribe({
-        next: (data) => {
+        next: (data: GetResponseProducts) => {
           this.isLoading = false;
-          this.paginationResult();
+          this.products = data._embedded.products;
+          this.pageNumber = data.page.number;
+          this.totalPages = data.page.totalPages;
+          this.totalPageElements = data.page.totalElements;
         },
         error: (error) => {
           this.isLoading = false;
           console.log(error.message);
+          this.error = error;
         },
       });
   }

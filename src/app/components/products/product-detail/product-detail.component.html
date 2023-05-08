@@ -27,6 +27,7 @@
                 {{ product.unitPrice | currency : "INR" }}
               </p>
               <button
+                [disabled]="!isAuth"
                 (click)="addToCart(product)"
                 class="btn btn-outline-primary btn-sm"
               >

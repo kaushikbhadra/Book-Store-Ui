@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import {
   GetResponseProducts,
@@ -14,12 +15,14 @@ import {
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   categoryId!: number;
   prevCategoryId: number = 1;
   searchMode!: boolean;
   keyword!: string;
+  isAuth = false;
+  private userSub!: Subscription;
 
   totalPageElements!: number;
   totalPages!: number;
@@ -30,11 +33,15 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private cartService: CartService
+    private cartService: CartService,
+    private authService: AuthService
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       this.getProducts(this.pageNumber);
+      this.userSub = this.authService.user.subscribe((user) => {
+        this.isAuth = !!user;
+      });
     });
   }
 
@@ -113,5 +120,9 @@ export class ProductListComponent implements OnInit {
       1
     );
     this.cartService.addToCart(cartItem);
+  }
+
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
   }
 }

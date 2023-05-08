@@ -20,6 +20,7 @@
           </h6>
           <p class="text-info">{{ product.unitPrice | currency : "INR" }}</p>
           <button
+            [disabled]="!isAuth"
             type="button"
             class="btn btn-outline-primary btn-sm"
             (click)="addToCart(product)"

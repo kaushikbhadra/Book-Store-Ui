@@ -26,6 +26,11 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
+## Demo `Project`:
+
+![Book Store Ui](demo-project/book-store.png)
+
+---
 ## For Live Project Using Book Store Api Backend
 
 Website Link: [Book-Store-Ui](https://book-store-ui-app.web.app)
